@@ -20,51 +20,78 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      bottomNavigationBar: Theme(
-        data: Theme.of(context)
-            .copyWith(canvasColor: Theme
-            .of(context)
-            .primaryColor,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent
-        ),
-        child: BottomNavigationBar(
 
-            iconSize: 30,
-            selectedLabelStyle: Theme
-                .of(context)
-                .textTheme
-                .bodySmall,
-            unselectedLabelStyle: Theme
-                .of(context)
-                .textTheme
-                .bodySmall,
+      bottomNavigationBar: BottomNavigationBar(
 
+          iconSize: 30,
+          currentIndex: selectedIndex,
+          onTap: (index) {
+            selectedIndex = index;
+            setState(() {
 
-            currentIndex: selectedIndex,
-            onTap: (index) {
-              selectedIndex = index;
-              setState(() {
+            });
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home),
+              label: 'HOME',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.search,),
+              label: 'SEARCH',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.movie),
+              label: 'BROWSE',
 
-              });
-            },
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home),
-                label: 'HOME',
-              ),
-              BottomNavigationBarItem(icon: Icon(Icons.search,),
-                label: 'SEARCH',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.movie),
-                label: 'BROWSE',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.book),
+                label: 'WATCHLIST'),
 
-              ),
-              BottomNavigationBarItem(icon: Icon(Icons.book),
-                  label: 'WATCHLIST'),
-
-            ]),
-      ),
+          ]),
+      // Theme(
+      //   data: Theme.of(context)
+      //       .copyWith(canvasColor: Theme
+      //       .of(context)
+      //       .primaryColor,
+      //       highlightColor: Colors.transparent,
+      //       splashColor: Colors.transparent
+      //   ),
+      //   child: BottomNavigationBar(
+      //
+      //       iconSize: 30,
+      //       selectedLabelStyle: Theme
+      //           .of(context)
+      //           .textTheme
+      //           .bodySmall,
+      //       unselectedLabelStyle: Theme
+      //           .of(context)
+      //           .textTheme
+      //           .bodySmall,
+      //
+      //
+      //       currentIndex: selectedIndex,
+      //       onTap: (index) {
+      //         selectedIndex = index;
+      //         setState(() {
+      //
+      //         });
+      //       },
+      //       items: [
+      //         BottomNavigationBarItem(icon: Icon(Icons.home),
+      //           label: 'HOME',
+      //         ),
+      //         BottomNavigationBarItem(icon: Icon(Icons.search,),
+      //           label: 'SEARCH',
+      //         ),
+      //         BottomNavigationBarItem(
+      //           icon: Icon(Icons.movie),
+      //           label: 'BROWSE',
+      //
+      //         ),
+      //         BottomNavigationBarItem(icon: Icon(Icons.book),
+      //             label: 'WATCHLIST'),
+      //
+      //       ]),
+      // ),
       body: tabs[selectedIndex],
     );
   }
