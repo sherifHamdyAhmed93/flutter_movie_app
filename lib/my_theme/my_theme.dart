@@ -38,4 +38,6 @@ class MyThemeData{
       bodyLarge: TextStyle()
     )
   );
+
+  static final ThemeData lightMode = ThemeData();
 }
