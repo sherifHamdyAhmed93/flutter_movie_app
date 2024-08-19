@@ -6,7 +6,7 @@ import 'package:flutter_movie_app/my_theme/app_colors.dart';
 class MyThemeData{
   static final ThemeData MainMode = ThemeData(
     primaryColor: AppColors.primaryColor,
-    scaffoldBackgroundColor: Colors.transparent,
+    scaffoldBackgroundColor: AppColors.backgroundColor,
     appBarTheme: AppBarTheme(
       color: Colors.transparent,
       elevation: 0 ,
