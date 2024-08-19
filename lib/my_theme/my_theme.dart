@@ -35,8 +35,12 @@ class MyThemeData{
           color: AppColors.white
         ),
         displayLarge: TextStyle(),
-      bodyLarge: TextStyle()
-    )
+      bodyLarge: TextStyle()),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      unselectedItemColor: AppColors.whitegray,
+      selectedItemColor: AppColors.gold,
+      showUnselectedLabels: true,
+    ),
   );
 
   static final ThemeData lightMode = ThemeData();

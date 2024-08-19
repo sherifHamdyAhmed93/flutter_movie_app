@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_app/browse/browse_tab.dart';
 import 'package:flutter_movie_app/home/home_tab.dart';
+import 'package:flutter_movie_app/my_theme/app_colors.dart';
 import 'package:flutter_movie_app/watch_list/watch_list_tab.dart';
 
 import '../search/search_tab.dart';
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff121312),
+      backgroundColor: AppColors.backgroundColor,
       bottomNavigationBar: Theme(
         data: Theme.of(context)
             .copyWith(canvasColor: Theme
