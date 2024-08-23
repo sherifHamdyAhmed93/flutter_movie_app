@@ -54,7 +54,7 @@ class _HomeTabState extends State<HomeTab> {
     return Container(
       height: MediaQuery.of(context).size.height*0.2,
       padding: EdgeInsets.all(15),
-      color: AppColors.blackgray,
+      color: AppColors.containerBackgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -81,7 +81,7 @@ class _HomeTabState extends State<HomeTab> {
     return Container(
       height: MediaQuery.of(context).size.height*0.27,
       padding: EdgeInsets.all(15),
-      color: AppColors.blackgray,
+      color: AppColors.containerBackgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

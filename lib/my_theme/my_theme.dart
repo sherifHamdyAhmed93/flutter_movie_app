@@ -9,6 +9,11 @@ class MyThemeData{
     scaffoldBackgroundColor: AppColors.backgroundColor,
     canvasColor: AppColors.black,
     appBarTheme: AppBarTheme(
+      titleTextStyle: GoogleFonts.inter(
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+          color: AppColors.white
+      ),
       color: Colors.transparent,
       elevation: 0 ,
       centerTitle: true,

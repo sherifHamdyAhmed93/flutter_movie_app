@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_movie_app/firebase_options.dart';
 import 'package:flutter_movie_app/home/home_screen.dart';
+import 'package:flutter_movie_app/movie_details_screen/movie_details_screen.dart';
 import 'package:flutter_movie_app/my_theme/my_theme.dart';
 
 Future<void> main() async {
@@ -23,9 +24,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: MovieDetailsScreen.routeName,
       routes: {
-        HomeScreen.routeName: (context) => HomeScreen()
+        HomeScreen.routeName: (context) => HomeScreen(),
+        MovieDetailsScreen.routeName:(context) => MovieDetailsScreen()
       },
       theme: MyThemeData.MainMode,
       title: 'Flutter Demo',

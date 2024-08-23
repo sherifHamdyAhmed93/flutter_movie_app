@@ -12,6 +12,7 @@ class AppColors{
   static Color whitegray = Color(0xffC6C6C6);
   static Color backgroundColor = Color(0xff121312) ;
   static Color itemBackgroundColor = Color(0xff343534) ;
+  static Color containerBackgroundColor = Color(0xff282A28) ;
 
 
 

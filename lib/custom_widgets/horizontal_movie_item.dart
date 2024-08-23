@@ -7,7 +7,7 @@ class HorizontalMovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width * 0.27;
+    final double width = MediaQuery.of(context).size.width * 0.28;
     final double height = width * 1.5; // Adjust height to maintain aspect ratio
 
     return Container(

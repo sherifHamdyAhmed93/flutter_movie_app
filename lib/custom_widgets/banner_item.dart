@@ -35,6 +35,7 @@ class BannerItem extends StatelessWidget {
             color: AppColors.black,
           ),
           Positioned(
+            left: 30,bottom: 10,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -53,7 +54,6 @@ class BannerItem extends StatelessWidget {
                 ),
               ],
             ),
-            left: 30,bottom: 10,
           ),
 
           Positioned(
