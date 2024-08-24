@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_app/custom_widgets/BookmarkButton.dart';
+import 'package:flutter_movie_app/data_model/movie_model.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
 
 class HorizontalMovieItem extends StatelessWidget {
-  HorizontalMovieItem({super.key});
+  HorizontalMovieItem({super.key,required this.movie});
+  MovieModel movie;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +25,20 @@ class HorizontalMovieItem extends StatelessWidget {
         alignment: Alignment.topLeft,
         children: [
           Positioned.fill(
-            child: Image.network(
-              'https://marketplace.canva.com/EAFVOC6TAng/1/0/1131w/canva-yellow-and-white-action-movie-poster-_GG58WASM1E.jpg',
-              fit: BoxFit.fill,
+            child: CachedNetworkImage(
+              imageUrl: movie.getFullPosterImagePath() ?? '',
+              imageBuilder: (context, imageProvider) => Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              placeholder: (context, url) => CircularProgressIndicator(color: AppColors.gold,),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           Positioned(

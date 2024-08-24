@@ -84,7 +84,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-          HorizontalMovieItem(),
+          //HorizontalMovieItem(),
           const SizedBox(width: 10,),
           Expanded(
               child: LayoutBuilder(

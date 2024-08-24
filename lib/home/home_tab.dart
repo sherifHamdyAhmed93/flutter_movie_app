@@ -1,8 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_movie_app/custom_widgets/banner_item.dart';
-import 'package:flutter_movie_app/custom_widgets/horizontal_movie_item.dart';
 import 'package:flutter_movie_app/custom_widgets/recommended_movie_item.dart';
+import 'package:flutter_movie_app/home/top_section_movies_list_widget.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
 
 class HomeTab extends StatefulWidget {
@@ -11,13 +9,15 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildTopBanner(),
+          TopSectionMoviesListWidget(),
           const SizedBox(height: 20,),
           _buildHorizontalMoviesList(),
           const SizedBox(height: 20,),
@@ -28,27 +28,6 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  Widget _buildTopBanner(){
-    return Container(
-      color: AppColors.gold,
-      // height: MediaQuery.of(context).size.height*0.3,
-      // width: double.infinity,
-      child: CarouselSlider.builder(
-        itemCount: 4,
-        itemBuilder: (context,itemIndex,pageViewIndex){
-          return BannerItem();
-        },
-        options: CarouselOptions(
-          autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
-          aspectRatio: 1.4/1,
-          viewportFraction: 1,
-          // height: MediaQuery.of(context).size.height*0.3,
-          autoPlay: true,
-          autoPlayInterval: Duration(seconds: 2),
-        ),
-      ),
-    );
-  }
 
   Widget _buildHorizontalMoviesList(){
     return Container(
@@ -65,7 +44,7 @@ class _HomeTabState extends State<HomeTab> {
               itemCount: 5,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return HorizontalMovieItem();
+                return Container();//HorizontalMovieItem();
               },
               separatorBuilder: (context,index){
                 return SizedBox(width: 10,);

@@ -1,17 +1,17 @@
-import 'dart:ui';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_app/custom_widgets/horizontal_movie_item.dart';
+import 'package:flutter_movie_app/data_model/movie_model.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
 
 class BannerItem extends StatelessWidget {
-  const BannerItem({super.key});
+  BannerItem({super.key,required this.movie});
+  MovieModel movie;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      // height: MediaQuery.of(context).size.height * 0.3, // Set the desired height
       decoration: BoxDecoration(
         color: AppColors.itemBackgroundColor,
         borderRadius: BorderRadius.circular(4),
@@ -19,13 +19,21 @@ class BannerItem extends StatelessWidget {
       child: Stack(
         alignment: AlignmentDirectional.bottomStart,
         children: [
-          Image.network(
-          'https://marketplace.canva.com/EAFVOC6TAng/1/0/1131w/canva-yellow-and-white-action-movie-poster-_GG58WASM1E.jpg',
-          fit: BoxFit.cover, // Ensure the image covers the container
-          width: double.infinity,
-          height: double.infinity,
-        ),
-          // Applying blur effect
+          CachedNetworkImage(
+              imageUrl: movie.getFullPosterImagePath() ?? '',
+            imageBuilder: (context, imageProvider) => Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            placeholder: (context, url) => Center(child: CircularProgressIndicator(color: AppColors.gold,)),
+            errorWidget: (context, url, error) => Center(child:Icon(Icons.error,color: Colors.red,size: MediaQuery.of(context).size.width * 0.1,)),
+          ),
           Container(
             color: AppColors.black.withOpacity(0.1),
           ),
@@ -39,15 +47,15 @@ class BannerItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                HorizontalMovieItem(),
+                HorizontalMovieItem(movie: movie,),
                 SizedBox(width: 10,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 4,),
-                    Text('Dora and the lost city of gold',style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14),),
+                    Text('${movie.title}',style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14),),
                     SizedBox(height: 4,),
-                    Text('2019  PG-13  2h 7m',style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),overflow: TextOverflow.ellipsis,),
+                    Text(movie.getDateWithGenresAndDuration(),style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),overflow: TextOverflow.ellipsis,),
                     SizedBox(height: 10,),
 
                   ],
@@ -55,18 +63,20 @@ class BannerItem extends StatelessWidget {
               ],
             ),
           ),
-
-          Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: IconButton(
-                icon: Icon(Icons.play_circle_fill, color: Colors.white, size: 60),
-                onPressed: () {
-                  // Add your onPressed logic here
-                },
+          Visibility(
+            visible: movie.video ?? false,
+            child: Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: IconButton(
+                  icon: Icon(Icons.play_circle_fill, color: Colors.white, size: 60),
+                  onPressed: () {
+                    // Add your onPressed logic here
+                  },
+                ),
               ),
             ),
           ),
