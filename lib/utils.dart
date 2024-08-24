@@ -15,8 +15,8 @@ class Utils{
   }
 
   static String convertMinutesToFormatedTime(int minutes){
-    int hours = minutes % 60;
-    int remaningMinutes = (minutes / 60).toInt();
+    int hours = (minutes / 60).toInt();
+    int remaningMinutes = minutes % 60;
     String movieTime = '';
     if (hours > 0){
       movieTime = '${hours}h ';
@@ -28,3 +28,9 @@ class Utils{
   }
 
 }
+
+/*
+* 128
+* 128 / 60 = 2
+* 128 % 60 = 8 minutes
+* */
