@@ -5,7 +5,7 @@ class SearchTab extends StatelessWidget {
 
   var formKEY =GlobalKey<FormState>() ;
   String title = '';
-  String desc = '';
+  late String actor ;
 
   @override
   Widget build(BuildContext context) {

@@ -4,15 +4,22 @@ import 'package:flutter/material.dart';
 TODO this widget is NOT COMPLETED SO please wait
 */
 /*
- TODO ONLY Prototype
+ TODO THIS is Prototype
 */
 
 class MovieDetails extends StatelessWidget {
+  late String title ;
+  late String year ;
+  late String actor ;
+
+
+  MovieDetails(this.title , this.year ,this.actor, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,7 +55,7 @@ class MovieDetails extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           const Divider(
             color: Colors.white,
             thickness: 1,
