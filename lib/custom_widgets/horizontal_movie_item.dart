@@ -6,8 +6,9 @@ import 'package:flutter_movie_app/movie_details_screen/movie_details_screen.dart
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
 
 class HorizontalMovieItem extends StatelessWidget {
-  HorizontalMovieItem({super.key,required this.movie});
+  HorizontalMovieItem({super.key,required this.movie,this.disableTab = false});
   MovieModel movie;
+  bool disableTab;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,10 @@ class HorizontalMovieItem extends StatelessWidget {
 
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, MovieDetailsScreen.routeName,arguments: movie);
+        if (disableTab == false) {
+          Navigator.pushNamed(
+              context, MovieDetailsScreen.routeName, arguments: movie);
+        }
       },
       child: Container(
         width: width,

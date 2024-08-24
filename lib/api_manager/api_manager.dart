@@ -84,5 +84,24 @@ class ApiManager{
     }
   }
 
+  static Future<MoviesResponse?> getMoviesLikeThese(int movieId)async{
+    final String urlString = ApiPathes.buildURL(path: '/$movieId${ApiPathes.similarMoviesPath}');
+    print(urlString);
+    final Uri uri = Uri.parse(urlString);
+    try{
+      final response = await http.get(uri,headers: ApiConstants.getHeaders());
+      if (ErrorMessages.isSuccess(response.statusCode)) {
+        var bodyString = response.body;
+        var jsonData = json.decode(bodyString);
+        var result = MoviesResponse.fromJson(jsonData);
+        return result;
+      }else{
+        throw Exception(ErrorMessages.getErrorMessage(response.statusCode));
+      }
+    }catch(e){
+      throw e;
+    }
+  }
+
 
 }

@@ -73,7 +73,7 @@ class RecommendedMovieItem extends StatelessWidget {
                        children: [
                          Icon(Icons.star,color: AppColors.gold,size: 15,),
                          SizedBox(width: 2,),
-                         Text('7.7',style: Theme.of(context).textTheme.displaySmall,)
+                         Text('${movie.voteAverage?.toStringAsFixed(2)}',style: Theme.of(context).textTheme.displaySmall,)
                        ],
                      ),
                      SizedBox(height: 4,),

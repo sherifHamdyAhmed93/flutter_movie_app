@@ -55,7 +55,7 @@ class _RecommendedMoviesListWidgetState extends State<RecommendedMoviesListWidge
           const SizedBox(height: 10,),
           Expanded(
             child: ListView.separated(
-              itemCount: 5,
+              itemCount: movies.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return RecommendedMovieItem(movie: movies[index],);

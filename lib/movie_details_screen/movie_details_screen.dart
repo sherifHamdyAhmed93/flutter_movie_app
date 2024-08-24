@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/custom_widgets/error_widget.dart';
 import 'package:flutter_movie_app/custom_widgets/horizontal_movie_item.dart';
+import 'package:flutter_movie_app/custom_widgets/recommended_movie_item.dart';
 import 'package:flutter_movie_app/data_model/Genres.dart';
 import 'package:flutter_movie_app/data_model/movie_model.dart';
-import 'package:flutter_movie_app/movie_details_screen/view_model/movie_details_view_model_cubit.dart';
+import 'package:flutter_movie_app/movie_details_screen/view_model/movie_details_view_model/movie_details_view_model_cubit.dart';
+import 'package:flutter_movie_app/movie_details_screen/view_model/similar_movies_view_model/similar_movies_view_model.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MovieDetailsScreen extends StatefulWidget {
   static const String routeName = 'movie_details';
   MovieDetailsScreen({super.key});
@@ -19,6 +21,7 @@ class MovieDetailsScreen extends StatefulWidget {
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   MovieDetailsViewModel? movieDetailsViewModel;
+  SimilarMoviesViewModel? similarMoviesViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         child: Column(
           children: [
             buildMovieDetailsWidget(movie.id),
-            _buildHorizontalRecommendedMoviesList()
+            _buildHorizontalRecommendedMoviesList(movie.id)
           ],
         ),
       ),
@@ -137,7 +140,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-          HorizontalMovieItem(movie: movie,),
+          HorizontalMovieItem(movie: movie,disableTab: true,),
           const SizedBox(width: 10,),
           Expanded(
               child: LayoutBuilder(
@@ -206,7 +209,31 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
 
-  Widget _buildHorizontalRecommendedMoviesList(){
+  Widget _buildHorizontalRecommendedMoviesList(int? movieId) {
+    if (similarMoviesViewModel ==  null){
+      similarMoviesViewModel = SimilarMoviesViewModel(movieId: movieId!);
+    }
+    return BlocBuilder<SimilarMoviesViewModel, SimilarMoviesViewModelState>(
+        bloc: similarMoviesViewModel,
+        builder: (context, state) {
+          if (state is SimilarMoviesViewModelDataFetched) {
+            if (state.movies.isEmpty) {
+              return SizedBox();
+            } else {
+              return buildSimilarMoviesSection(state.movies);
+            }
+          } else if (state is SimilarMoviesViewModelError) {
+            return TryAgainWidget(errorMessage: state.errorMessage,
+                onError: similarMoviesViewModel!.getSimilarMovies);
+          } else {
+            return Center(
+              child: CircularProgressIndicator(color: AppColors.gold,),);
+          }
+        }
+    );
+  }
+
+  Widget buildSimilarMoviesSection(List<MovieModel> movies) {
     return Container(
       height: MediaQuery.of(context).size.height*0.27,
       padding: EdgeInsets.all(15),
@@ -214,14 +241,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Recomended', style: Theme.of(context).textTheme.headlineSmall),
+          Text(AppLocalizations.of(context)!.more_like_this, style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: 10,),
           Expanded(
             child: ListView.separated(
-              itemCount: 5,
+              itemCount: movies.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return Container();//RecommendedMovieItem();
+                return RecommendedMovieItem(movie: movies[index],);
               },
               separatorBuilder: (context,index){
                 return SizedBox(width: 10,);

@@ -2,7 +2,9 @@ import 'package:intl/intl.dart';
 
 class Utils{
   static String formatDate(String dateString){
-
+    if (dateString.isEmpty){
+      return  '';
+    }
     // Step 1: Parse the string to DateTime
     DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(dateString);
 
@@ -28,9 +30,3 @@ class Utils{
   }
 
 }
-
-/*
-* 128
-* 128 / 60 = 2
-* 128 % 60 = 8 minutes
-* */
