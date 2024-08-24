@@ -168,7 +168,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               itemCount: 5,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return RecommendedMovieItem();
+                return Container();//RecommendedMovieItem();
               },
               separatorBuilder: (context,index){
                 return SizedBox(width: 10,);

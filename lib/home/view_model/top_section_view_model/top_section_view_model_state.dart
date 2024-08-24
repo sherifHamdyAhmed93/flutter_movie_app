@@ -1,7 +1,6 @@
 part of 'top_section_view_model_cubit.dart';
 
-@immutable
-sealed class TopSectionViewModelState {}
+final class TopSectionViewModelState {}
 
 final class TopSectionViewModelLoading extends TopSectionViewModelState {}
 

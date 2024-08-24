@@ -26,5 +26,43 @@ class ApiManager{
     }
   }
 
+  static Future<MoviesResponse?> getRecommendedMovies()async{
+    final String urlString = ApiPathes.buildURL(path: ApiPathes.recommendedMoviesPath);
+    print(urlString);
+    final Uri uri = Uri.parse(urlString);
+    try{
+      final response = await http.get(uri,headers: ApiConstants.getHeaders());
+      if (ErrorMessages.isSuccess(response.statusCode)) {
+        var bodyString = response.body;
+        var jsonData = json.decode(bodyString);
+        var result = MoviesResponse.fromJson(jsonData);
+        return result;
+      }else{
+        throw Exception(ErrorMessages.getErrorMessage(response.statusCode));
+      }
+    }catch(e){
+      throw e;
+    }
+  }
+
+  static Future<MoviesResponse?> getNewReleasesMovies()async{
+    final String urlString = ApiPathes.buildURL(path: ApiPathes.newReleasesMoviePath);
+    print(urlString);
+    final Uri uri = Uri.parse(urlString);
+    try{
+      final response = await http.get(uri,headers: ApiConstants.getHeaders());
+      if (ErrorMessages.isSuccess(response.statusCode)) {
+        var bodyString = response.body;
+        var jsonData = json.decode(bodyString);
+        var result = MoviesResponse.fromJson(jsonData);
+        return result;
+      }else{
+        throw Exception(ErrorMessages.getErrorMessage(response.statusCode));
+      }
+    }catch(e){
+      throw e;
+    }
+  }
+
 
 }

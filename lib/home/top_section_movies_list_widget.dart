@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/custom_widgets/banner_item.dart';
 import 'package:flutter_movie_app/custom_widgets/error_widget.dart';
-import 'package:flutter_movie_app/home/view_model/top_section_view_model_cubit.dart';
+import 'package:flutter_movie_app/home/view_model/top_section_view_model/top_section_view_model_cubit.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
 
 class TopSectionMoviesListWidget extends StatefulWidget {

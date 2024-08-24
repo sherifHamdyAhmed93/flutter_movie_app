@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_app/custom_widgets/BookmarkButton.dart';
+import 'package:flutter_movie_app/data_model/movie_model.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
 
 class RecommendedMovieItem extends StatelessWidget {
-  const RecommendedMovieItem({super.key});
+  RecommendedMovieItem({super.key,required this.movie});
+  MovieModel movie;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +31,20 @@ class RecommendedMovieItem extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topLeft,
                 children: [
-                   Image.network(
-                    width: double.infinity,
-                    'https://marketplace.canva.com/EAFVOC6TAng/1/0/1131w/canva-yellow-and-white-action-movie-poster-_GG58WASM1E.jpg',
-                    fit: BoxFit.fill,
+                  CachedNetworkImage(
+                    imageUrl: movie.getFullPosterImagePath() ?? '',
+                    imageBuilder: (context, imageProvider) => Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    placeholder: (context, url) => CircularProgressIndicator(color: AppColors.gold,),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                   Positioned(
                       top: -10,
@@ -59,9 +72,9 @@ class RecommendedMovieItem extends StatelessWidget {
                      ],
                    ),
                    SizedBox(height: 4,),
-                   Text('Deadpool 2',style: Theme.of(context).textTheme.displaySmall,),
+                   Text('${movie.title}',maxLines: 1,style: Theme.of(context).textTheme.displaySmall,),
                    SizedBox(height: 4,),
-                   Text('2018  R  1h 59m',style: Theme.of(context).textTheme.bodySmall,overflow: TextOverflow.ellipsis,),
+                   Text(movie.getDateWithGenresAndDuration(),maxLines: 1,style: Theme.of(context).textTheme.bodySmall,overflow: TextOverflow.ellipsis,),
                  ],
                ),
              ),
