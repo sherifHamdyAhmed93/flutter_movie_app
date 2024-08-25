@@ -46,7 +46,7 @@ class HorizontalMovieItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                placeholder: (context, url) => CircularProgressIndicator(color: AppColors.gold,),
+                placeholder: (context, url) => Center(child: CircularProgressIndicator(color: AppColors.gold,)),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
