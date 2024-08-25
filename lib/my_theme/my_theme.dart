@@ -9,14 +9,24 @@ class MyThemeData{
     scaffoldBackgroundColor: AppColors.backgroundColor,
     canvasColor: AppColors.black,
     appBarTheme: AppBarTheme(
+      titleTextStyle: GoogleFonts.inter(
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+          color: AppColors.white
+      ),
       color: Colors.transparent,
       elevation: 0 ,
       centerTitle: true,
       iconTheme: IconThemeData(color: AppColors.white),
     ),
     textTheme: TextTheme(
-      displaySmall: TextStyle(
-        fontSize: 14,
+      headlineSmall: GoogleFonts.inter(
+          fontSize: 15,
+          fontWeight: FontWeight.normal,
+          color: AppColors.white
+      ),
+      displaySmall: GoogleFonts.poppins(
+        fontSize: 10,
         fontWeight: FontWeight.normal,
         color: AppColors.white
       ),
@@ -25,12 +35,12 @@ class MyThemeData{
         fontWeight: FontWeight.w400,
         color: AppColors.white
       ),
-        bodySmall: TextStyle(
-          fontSize: 13,
+        bodySmall: GoogleFonts.inter(
+          fontSize: 8,
           fontWeight: FontWeight.w400,
           color: AppColors.whitegray
         ),
-        bodyMedium: TextStyle(
+        bodyMedium: GoogleFonts.inter(
           fontSize: 14,
           fontWeight: FontWeight.w600,
           color: AppColors.white
