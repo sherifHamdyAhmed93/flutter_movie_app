@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/custom_widgets/error_widget.dart';
 import 'package:flutter_movie_app/custom_widgets/horizontal_movie_item.dart';
+import 'package:flutter_movie_app/custom_widgets/play_button_widget.dart';
 import 'package:flutter_movie_app/custom_widgets/recommended_movie_item.dart';
 import 'package:flutter_movie_app/data_model/Genres.dart';
 import 'package:flutter_movie_app/data_model/movie_model.dart';
@@ -100,23 +101,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               placeholder: (context, url) => Center(child: CircularProgressIndicator(color: AppColors.gold,)),
               errorWidget: (context, url, error) => Center(child:Icon(Icons.error,color: Colors.red,size: MediaQuery.of(context).size.width * 0.1,)),
             ),
-            Visibility(
-              visible: movie.video ?? false,
-              child: Positioned(
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: IconButton(
-                    icon: Icon(Icons.play_circle_fill, color: Colors.white, size: 60),
-                    onPressed: () {
-                      // Add your onPressed logic here
-                    },
-                  ),
-                ),
-              ),
-            ),
+            PlayButtonWidget(movieId: movie.id!),
       ]),
     );
   }

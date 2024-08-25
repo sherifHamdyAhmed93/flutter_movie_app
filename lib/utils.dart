@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Utils{
   static String formatDate(String dateString){
@@ -27,6 +28,13 @@ class Utils{
       movieTime += '${remaningMinutes}m';
     }
     return movieTime;
+  }
+
+  static Future<void> launchURL(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $uri');
+    }
   }
 
 }

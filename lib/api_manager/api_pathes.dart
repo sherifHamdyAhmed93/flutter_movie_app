@@ -5,6 +5,8 @@ class ApiPathes{
   static const String newReleasesMoviePath = '/upcoming';
   static const String recommendedMoviesPath = '/top_rated';
   static const String similarMoviesPath = '/similar';
+  static const String movieVideosPath = '/videos';
+
 
 
 

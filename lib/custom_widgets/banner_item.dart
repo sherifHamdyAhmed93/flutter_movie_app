@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_app/custom_widgets/horizontal_movie_item.dart';
+import 'package:flutter_movie_app/custom_widgets/play_button_widget.dart';
 import 'package:flutter_movie_app/data_model/movie_model.dart';
 import 'package:flutter_movie_app/movie_details_screen/movie_details_screen.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
@@ -68,23 +69,7 @@ class BannerItem extends StatelessWidget {
                 ],
               ),
             ),
-            Visibility(
-              visible: movie.video ?? false,
-              child: Positioned(
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: IconButton(
-                    icon: Icon(Icons.play_circle_fill, color: Colors.white, size: 60),
-                    onPressed: () {
-                      // Add your onPressed logic here
-                    },
-                  ),
-                ),
-              ),
-            ),
+            PlayButtonWidget(movieId: movie.id!),
           ],
         ),
       ),
