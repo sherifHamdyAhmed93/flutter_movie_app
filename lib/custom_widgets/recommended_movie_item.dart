@@ -54,7 +54,7 @@ class RecommendedMovieItem extends StatelessWidget {
                     Positioned(
                         top: -10,
                         left: -10,
-                        child: BookmarkButton()
+                        child: BookmarkButton(movie: movie,)
                     )
                   ],
                 ),
