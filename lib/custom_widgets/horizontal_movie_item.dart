@@ -53,7 +53,7 @@ class HorizontalMovieItem extends StatelessWidget {
             Positioned(
               top: -10, // Adjust as needed to fit within the container
               left: -10, // Adjust as needed to fit within the container
-              child: BookmarkButton(),
+              child: BookmarkButton(movie: movie,),
             ),
           ],
         ),

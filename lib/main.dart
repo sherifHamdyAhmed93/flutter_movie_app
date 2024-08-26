@@ -7,13 +7,17 @@ import 'package:flutter_movie_app/firebase_options.dart';
 import 'package:flutter_movie_app/home/home_screen.dart';
 import 'package:flutter_movie_app/movie_details_screen/movie_details_screen.dart';
 import 'package:flutter_movie_app/my_theme/my_theme.dart';
+import 'package:flutter_movie_app/provider/provider_watchlist.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider
+    (create: (context) => ProviderWatchList(),
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
