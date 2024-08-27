@@ -1,67 +1,67 @@
 import 'package:flutter/material.dart';
 
-/*
-TODO this widget is NOT COMPLETED SO please wait
-*/
-/*
- TODO THIS is Prototype
-*/
-
 class MovieDetails extends StatelessWidget {
-  late String title ;
-  late String year ;
-  late String actor ;
+  final String title;
+  final String year;
+  final String actor;
+  final String urlimage;
 
-
-  MovieDetails(this.title , this.year ,this.actor, {super.key});
+  MovieDetails({
+    required this.title,
+    required this.year,
+    required this.actor,
+    required this.urlimage,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(
-                'None', // Replace image URL
-                width: 100,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(width: 10),
-
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Alita Battle Angel',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-
-                    Text('2019'),
-                    SizedBox(height: 10),
-                    Text('Rosa Salazarrr'),
-
-                  ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Container(
+        color: Colors.transparent,
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(
+                  urlimage,
+                  width: 100,
+                  fit: BoxFit.cover,
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          const Divider(
-            color: Colors.white,
-            thickness: 1,
-            height: 20,
-          ),
-        ],
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(year),
+                      SizedBox(height: 10),
+                      Text(actor),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            const Divider(
+              color: Colors.white,
+              thickness: 1,
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
