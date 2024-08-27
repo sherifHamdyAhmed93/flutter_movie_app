@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_movie_app/api_manager/api_constants.dart';
 import 'package:flutter_movie_app/api_manager/api_pathes.dart';
 import 'package:flutter_movie_app/api_manager/error_messages.dart';
+import 'package:flutter_movie_app/data_model/Category.dart';
 import 'package:flutter_movie_app/data_model/movie_model.dart';
 import 'package:flutter_movie_app/data_model/movie_videos/Movie_videos_response.dart';
 import 'package:flutter_movie_app/data_model/movies_response.dart';
@@ -123,5 +124,20 @@ class ApiManager{
     }
   }
 
+  static Future<List<Category>?> getMovieCategory() async {
+    Uri url = Uri.https('api.themoviedb.org', ApiPathes.categoryPath, {
+      'language': 'en-US',
+    });
 
+    var response = await http.get(url, headers: ApiConstants.getHeaders());
+
+    try {
+      var responseBody = response.body;
+      var json = jsonDecode(responseBody);
+      var categoryResponse = CategoryResponse.fromJson(json);
+      return categoryResponse.genres;
+    } catch (e) {
+      throw e;
+    }
+  }
 }

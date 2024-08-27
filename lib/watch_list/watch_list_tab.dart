@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_movie_app/watch_list/watch_list_item.dart';
 import 'package:provider/provider.dart';
 
 import '../my_theme/app_colors.dart';
 import '../provider/provider_watchlist.dart';
-
 
 class WatchListTab extends StatelessWidget {
 
@@ -16,7 +16,7 @@ class WatchListTab extends StatelessWidget {
     }
     return Scaffold(
         appBar: AppBar(
-          title: Text('WatchList'),
+          title: Text(AppLocalizations.of(context)!.watchlist),
           centerTitle: false,
         ),
         body: providerWatchList.movies.isEmpty ?

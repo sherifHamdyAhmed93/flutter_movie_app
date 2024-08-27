@@ -6,9 +6,7 @@ class ApiPathes{
   static const String recommendedMoviesPath = '/top_rated';
   static const String similarMoviesPath = '/similar';
   static const String movieVideosPath = '/videos';
-
-
-
+  static const String categoryPath = '/3/genre/movie/list';
 
   static String buildURL({required String path}){
     return '${ApiConstants.baseUrl}$path';
