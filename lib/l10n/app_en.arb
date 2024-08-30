@@ -4,5 +4,6 @@
 "recommended" : "Recommended",
 "more_like_this" : "More Like This",
 "browse":"Browse Category",
-"watchlist":"Watchlist"
+"watchlist":"Watchlist",
+"noMoviesFound": "No movies found in this category"
 }

@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_movie_app/firebase_options.dart';
 import 'package:flutter_movie_app/home/home_screen.dart';
 import 'package:flutter_movie_app/movie_details_screen/movie_details_screen.dart';
+import 'package:flutter_movie_app/movies_by_catgeory_screen/movies_by_catgory_screen.dart';
 import 'package:flutter_movie_app/my_theme/my_theme.dart';
 import 'package:flutter_movie_app/provider/provider_watchlist.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,9 @@ class MyApp extends StatelessWidget {
       initialRoute: HomeScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
-        MovieDetailsScreen.routeName:(context) => MovieDetailsScreen()
+        MovieDetailsScreen.routeName:(context) => MovieDetailsScreen(),
+        MoviesByCategoryScreen.routeName:(context) => MoviesByCategoryScreen(),
+
       },
       theme: MyThemeData.MainMode,
       title: 'Flutter Demo',
