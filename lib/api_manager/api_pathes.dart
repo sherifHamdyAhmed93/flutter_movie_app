@@ -8,6 +8,7 @@ class ApiPathes{
   static const String movieVideosPath = '/videos';
   static const String categoryPath = '/3/genre/movie/list';
   static const String moviesByCategoryPath = '/discover/movie';
+  static const String searchMoviePath = '/search/movie';
 
 
 

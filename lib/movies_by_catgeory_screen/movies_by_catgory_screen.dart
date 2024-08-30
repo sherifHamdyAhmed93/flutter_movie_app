@@ -8,6 +8,7 @@ import 'package:flutter_movie_app/movies_by_catgeory_screen/grid_movie_item.dart
 import 'package:flutter_movie_app/movies_by_catgeory_screen/view_model/category_movies_view_model.dart';
 import 'package:flutter_movie_app/my_theme/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_movie_app/search/search_item_widget.dart';
 class MoviesByCategoryScreen extends StatefulWidget {
   static const String routeName = 'movies_by_category';
   const MoviesByCategoryScreen({super.key});
@@ -68,24 +69,41 @@ class _MoviesByCategoryScreenState extends State<MoviesByCategoryScreen> {
     return movies!.isEmpty ?
     _buildEmptyState()
         :
-    GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: MediaQuery.of(context).size.height*0.03,
-          crossAxisSpacing: MediaQuery.of(context).size.height*0.02,
-          childAspectRatio: 3/4, // Adjust the aspect ratio to better fit the design
+    Expanded(
+      child: ListView.separated(
+          separatorBuilder: (context, index) {
+            return SizedBox(height: 20,);
+          },
+          controller: scrollController,
+          itemCount: isLoadMore ? movies.length + 1 : movies.length,
+          itemBuilder: (context, index) {
+            if (index < movies.length) {
+              return SearchItemWidget(movie: movies[index]);
+            } else {
+              return Center(child: CircularProgressIndicator(
+                  color: AppColors.primaryColor));
+            }
+          }
       ),
-      controller: scrollController,
-      shrinkWrap: true,
-      itemCount: isLoadMore ? movies.length + 1 : movies.length,
-      itemBuilder: (context, index) {
-        if (index < movies.length) {
-          return GridMovieItem(movie: movies[index],);
-        } else {
-          return Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
-        }
-      },
     );
+    // GridView.builder(
+    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    //       crossAxisCount: 2,
+    //       mainAxisSpacing: MediaQuery.of(context).size.height*0.03,
+    //       crossAxisSpacing: MediaQuery.of(context).size.height*0.02,
+    //       childAspectRatio: 3/4, // Adjust the aspect ratio to better fit the design
+    //   ),
+    //   controller: scrollController,
+    //   shrinkWrap: true,
+    //   itemCount: isLoadMore ? movies.length + 1 : movies.length,
+    //   itemBuilder: (context, index) {
+    //     if (index < movies.length) {
+    //       return GridMovieItem(movie: movies[index],);
+    //     } else {
+    //       return Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
+    //     }
+    //   },
+    // );
   }
 
   Widget _buildEmptyState() {
