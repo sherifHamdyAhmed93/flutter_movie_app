@@ -52,8 +52,6 @@ class Category {
     switch (categoryName) {
       case 'Action':
         return 'assets/images/crime.jpg';
-      case 'Comedy':
-        return 'assets/images/banner.png';
       case 'Animation':
         return 'assets/images/animation.jpg';
       case 'Adventure':
