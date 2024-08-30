@@ -167,5 +167,29 @@ class ApiManager{
     }
   }
 
+  static Future<MoviesResponse?> searchMovies({required String query,int page = 1})async{
+    final String urlString = ApiPathes.buildURL(path: ApiPathes.searchMoviePath);
+
+    final Map<String, String> queryParams = {
+      'query': query,
+      'page': '$page'
+    };
+    final Uri uri = Uri.parse(urlString).replace(queryParameters: queryParams);
+    print('$uri');
+
+    try{
+      final response = await http.get(uri,headers: ApiConstants.getHeaders());
+      if (ErrorMessages.isSuccess(response.statusCode)) {
+        var bodyString = response.body;
+        var jsonData = json.decode(bodyString);
+        var result = MoviesResponse.fromJson(jsonData);
+        return result;
+      }else{
+        throw Exception(ErrorMessages.getErrorMessage(response.statusCode));
+      }
+    }catch(e){
+      throw e;
+    }
+  }
 
 }

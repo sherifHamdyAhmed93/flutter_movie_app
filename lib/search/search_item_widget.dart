@@ -19,56 +19,53 @@ class SearchItemWidget extends StatelessWidget {
         Navigator.pushNamed(
             context, MovieDetailsScreen.routeName, arguments: movie);
       },
-      child: Container(
-        // clipBehavior: Clip.antiAlias,
-        // decoration: BoxDecoration(
-        //     color: AppColors.itemBackgroundColor,
-        //     borderRadius: BorderRadius.circular(10)
-        // ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-             Stack(
-              alignment: Alignment.topLeft,
-              children: [
-                SizedBox(
-                  width: imageWidth,
-                  height: imageHeight,
-                  child: CachedNetworkImage(
-                    imageUrl: movie.getFullPosterImagePath() ?? '',
-                    imageBuilder: (context, imageProvider) => Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+           Stack(
+            alignment: Alignment.topLeft,
+            children: [
+              SizedBox(
+                width: imageWidth,
+                height: imageHeight,
+                child: CachedNetworkImage(
+                  imageUrl: movie.getFullPosterImagePath() ?? '',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    placeholder: (context, url) => Center(child: CircularProgressIndicator(color: AppColors.gold,)),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator(color: AppColors.gold,)),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                Positioned(
-                    top: -10,
-                    left: -10,
-                    child: BookmarkButton(movie: movie,)
-                )
-              ],
-            ),
-            SizedBox(width: 10),
-            Column(
+              ),
+              Positioned(
+                  top: -10,
+                  left: -10,
+                  child: BookmarkButton(movie: movie,)
+              )
+            ],
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(movie.title ?? '',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall!
                         .copyWith(fontWeight: FontWeight.bold)),
                 SizedBox(
-                  height: 10,
+                  height: 6,
                 ),
                 Text(movie.getDateWithGenresAndDuration(),
                     style: Theme.of(context)
@@ -76,14 +73,14 @@ class SearchItemWidget extends StatelessWidget {
                         .headlineSmall!
                         .copyWith(color: AppColors.whitegray)),
                 SizedBox(
-                  height: 10,
+                  height: 6,
                 ),
                 RatingWidget(rating: movie.voteAverage ?? 0)
               ],
             ),
-
-          ],
-        ),
+          ),
+      
+        ],
       ),
     );
   }
