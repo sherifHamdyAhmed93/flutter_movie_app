@@ -1,103 +1,141 @@
+
 import 'package:flutter/material.dart';
-
-import '../mode/api_manager.dart';
-import '../mode/search_by_moviename.dart';
-import '../my_theme/app_colors.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_movie_app/c_widgets/error_widget.dart';
+import 'package:flutter_movie_app/model/movie_model.dart';
+import 'package:flutter_movie_app/my_theme/app_colors.dart';
+import 'package:flutter_movie_app/search/c_widgets/search_item_widget.dart';
+import 'package:flutter_movie_app/search/view_model/search_movies_view_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SearchTab extends StatefulWidget {
+
+
   @override
   State<SearchTab> createState() => _SearchTabState();
 }
 
 class _SearchTabState extends State<SearchTab> {
-  var formKey = GlobalKey<FormState>();
-  String query = '';
-  Future<SearchByMoviename?>? searchResults;
+  late SearchMoviesViewModel viewModel;
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel = SearchMoviesViewModel();
+    scrollController.addListener(onScroll);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      margin: const EdgeInsets.all(13),
-      child: Container(
-        color: AppColors.backgroundColor,
-        child: Column(
-          children: [
-            Form(
-              key: formKey,
+    return Scaffold(
+        body: SafeArea(
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(height: 20),
-                  TextFormField(
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium
-                        ?.copyWith(color: AppColors.white, fontSize: 19),
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      labelStyle: Theme.of(context)
-                          .textTheme
-                          .displaySmall
-                          ?.copyWith(color: AppColors.white),
-                      prefixIcon: Icon(Icons.search, color: AppColors.white),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide(color: AppColors.blackgray),
-                      ),
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        query = value;
-                        searchResults = APIManager.searchMovie(query: query);
-                      });
-                    },
-                  ),
+                  _buildSearchTextField(),
+                  SizedBox(height: 20,),
+                  BlocBuilder<SearchMoviesViewModel,SearchMoviesViewModelState>(
+                      bloc: viewModel,
+                      builder: (context,state){
+                        if (state is SearchMoviesViewModelDataFetched) {
+                          return _buildSearchResults(state.movies,state);
+                        }else if (state is SearchMoviesViewModelLoadMoreData) {
+                          return _buildSearchResults(state.movies,state);
+                        } else if (state is SearchMoviesViewModelError) {
+                          return TryAgainWidget(errorMessage: state.errorMessage,
+                              onError: viewModel.searchMovie);
+                        }else if (state is SearchMoviesViewModelInitState){
+                          return _buildEmptyState();
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(color: AppColors.gold,),);
+                        }
+                      }
+                  )
                 ],
-              ),
-            ),
-            Expanded(
-              child: FutureBuilder<SearchByMoviename?>(
-                future: searchResults,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data?.results == null || snapshot.data!.results!.isEmpty) {
-                    return Column(
-                      children: [
-                        SizedBox(height: 220),
-                        Image.asset('assets/images/Nfound.png'),
-                        SizedBox(height: 10),
-                        Text('No movies found',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium
-                                ?.copyWith(color: AppColors.whitegray, fontSize: 17)),
-                      ],
-                    );
-                  } else {
-                    var movies = snapshot.data!.results!;
-                    return ListView.builder(
-                      itemCount: movies.length,
-                      itemBuilder: (context, index) {
-                        return SearchResultsWidget(movie: movies[index]);
-                      },
-                    );
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
+              )
+          ),
+        )
+    );
+  }
+
+
+  Widget _buildSearchResults(List<MovieModel> movies,SearchMoviesViewModelState state) {
+    var isLoadMore = state is SearchMoviesViewModelLoadMoreData;
+    return movies.isEmpty ?
+    _buildEmptyState()
+        :
+    Expanded(
+      child: ListView.separated(
+          separatorBuilder: (context, index) {
+            return SizedBox(height: 20,);
+          },
+          controller: scrollController,
+          itemCount: isLoadMore ? movies.length + 1 : movies.length,
+          itemBuilder: (context, index) {
+            if (index < movies.length) {
+              return SearchItemWidget(movie: movies[index]);
+            } else {
+              return Center(child: CircularProgressIndicator(
+                  color: AppColors.primaryColor));
+            }
+          }
       ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Expanded(
+      child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset('assets/images/Nfound.png'),
+              SizedBox(height: 10,),
+              Text('no Movies Found')
+            ],
+          )
+      ),
+    );
+  }
+
+  void onScroll() {
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent && (viewModel.state is! SearchMoviesViewModelLoadMoreData)) {
+      viewModel.loadMore();
+    }
+  }
+
+  Widget _buildSearchTextField(){
+    return TextField(
+        controller: viewModel.searchTextController,
+        onChanged: (searchText){
+          viewModel.searchMovie();
+        },
+        cursorColor: AppColors.white,
+        style: Theme.of(context).textTheme.bodyMedium,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                borderSide: BorderSide(color: AppColors.white,width: 0.5)
+            ),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                borderSide: BorderSide(color: AppColors.white,width: 0.5)
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                borderSide: BorderSide(color: AppColors.white,width: 0.5)
+            ),
+            prefixIcon: Icon(Icons.search , color: AppColors.white,size: 30,),
+            hintText: 'Search',
+            hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14),
+            filled: true,
+            fillColor: AppColors.itemBackgroundColor
+        )
     );
   }
 }
